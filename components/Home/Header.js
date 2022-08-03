@@ -62,13 +62,13 @@ const styles = StyleSheet.create({
     icon: {
         width: 30,
         height: 30,
-        marginLeft: 10,
+        marginLeft: 20,
         resizeMode: 'contain'
     },
     unreadBadge: {
         backgroundColor: '#FF3250',
         position: 'absolute',
-        left: 20,
+        left: 25,
         bottom: 18,
         width: 25,
         height: 18,
