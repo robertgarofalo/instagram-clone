@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { postFooterIcons } from '../../data/postFooterIcons'
+import { useState } from 'react'
 
 const Post = ({ post }) => {
   return (
@@ -9,6 +10,9 @@ const Post = ({ post }) => {
         <PostImage post={post}/>
         <View style={{ marginHorizontal: 10, marginTop: 10}}>
             <PostFooter post={post}/>
+            <Likes post={post}/>
+            <Caption post={post} />
+            <CommentsSection post={post}/>
         </View>
     </View>
   )
@@ -59,6 +63,49 @@ const PostFooter = () => (
         
     </View>
 )
+
+const Likes = ({ post }) => (
+    <View style={{ flexDirection: 'row', marginTop: 4}}>
+        <Text style={{color: 'white', fontWeight: '600'}}>{post.likes.toLocaleString('en')}</Text>
+    </View>
+        
+)
+
+const Caption = ({ post }) => (
+    <View style={{marginTop: 5}} >
+        <Text style={{color: 'white'}}>
+            <Text style={{fontWeight: '600', marginRight: 5}}>{post.user}</Text>
+            <Text> {post.caption}</Text>
+        </Text>
+    </View>
+)
+
+const CommentsSection = ({ post }) => {
+
+    const [showAllComments, setShowAllComments] = useState(null)
+
+    if (post.comments.length === 0){
+        return null
+    }
+    
+    return (
+        <View style={{marginBottom: 20}}>
+          { !showAllComments && <Text style={{color: 'grey', marginTop: 10}} onPress={() => setShowAllComments(true)}>
+                { post.comments.length === 1 ? `View comment` : `View all ${post.comments.length} comments`}
+            </Text>
+            }
+            {
+             showAllComments && post.comments.map((comment, index) => (
+                <Text key={`comment-${index}`} style={{color: 'white', marginTop: 10}}>
+                    <Text style={{fontWeight: '600', marginRight: 5}}>{comment.user}</Text>
+                    <Text> {comment.comment}</Text>
+                </Text>
+                 ))
+            }
+
+        </View>
+    )
+}
 
 export default Post
 
