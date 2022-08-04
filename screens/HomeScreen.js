@@ -1,14 +1,16 @@
 import { View, Text } from 'react-native'
 import { SafeAreaView, StyleSheet, ScrollView } from 'react-native'
-
-import { POSTS } from '../data/posts'
-
 import { Divider } from 'react-native-elements'
+
+//Data
+import { POSTS } from '../data/posts'
+import { bottomTabIcons } from '../data/bottomTabIcons'
 
 // screens
 import Header from '../components/Home/Header'
 import Stories from '../components/Home/Stories'
 import Post from '../components/Home/Post'
+import BottomTabs from '../components/Home/BottomTabs'
 
 
 
@@ -23,6 +25,7 @@ const HomeScreen = () => {
           <Post key={`post-${index}`} post={item}/>
         ))}
       </ScrollView>
+      <BottomTabs icons={bottomTabIcons}/>
     </SafeAreaView>
   )
 }
