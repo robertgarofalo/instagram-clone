@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
+import { TouchableOpacity } from 'react-native'
+import { postFooterIcons } from '../../data/postFooterIcons'
 
 const Post = ({ post }) => {
   return (
     <View style={styles.postContainer}>
         <PostHeader post={post} />
         <PostImage post={post}/>
-        <Text style={{color: 'white'}}>Hello there</Text>
-        {/* BOTTOM BAR */}
+        <View style={{ marginHorizontal: 10, marginTop: 10}}>
+            <PostFooter post={post}/>
+        </View>
     </View>
   )
 }
@@ -22,7 +25,7 @@ const PostHeader = ({ post }) => (
                 <Text style={styles.userName}>{post.user}</Text>
             </View>
             <View>
-                <Text style={{color: 'white'}}>...</Text>
+                <Text style={{color: 'white', fontWeight: '900'}}>...</Text>
             </View>
         </View>
 )
@@ -38,7 +41,24 @@ const PostImage = ({ post }) => (
     </View>
 )
 
+const Icon = ({imgStyle, imgUrl}) => (
+    <TouchableOpacity>
+        <Image style={imgStyle} source={{ uri: imgUrl }} />
+    </TouchableOpacity>
+)
 
+// Post icons
+const PostFooter = () => (
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row'}}>
+            <Icon imgStyle={styles.footerIcon} imgUrl={postFooterIcons[0].imageUrl}/>
+            <Icon imgStyle={styles.footerIcon} imgUrl={postFooterIcons[1].imageUrl}/>
+            <Icon imgStyle={styles.footerIcon} imgUrl={postFooterIcons[2].imageUrl}/>
+        </View>
+            <Icon imgStyle={styles.footerIcon} imgUrl={postFooterIcons[3].imageUrl}/>
+        
+    </View>
+)
 
 export default Post
 
@@ -68,9 +88,17 @@ const styles = StyleSheet.create({
     userName: {
         color: 'white',
     },
+    postImageContainer: {
+        height: 350,
+    },
     postImage: {
-        width: '100%',
+        // width: '100%',
         height: '100%',
         resizeMode: 'cover',
+    },
+    footerIcon: {
+        width: 30,
+        height: 30,
+        marginRight: 10,
     }
 })
