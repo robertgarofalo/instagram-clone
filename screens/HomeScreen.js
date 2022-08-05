@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { SafeAreaView, StyleSheet, ScrollView } from 'react-native'
 import { Divider } from 'react-native-elements'
@@ -12,7 +13,16 @@ import Stories from '../components/Home/Stories'
 import Post from '../components/Home/Post'
 import BottomTabs from '../components/Home/BottomTabs'
 
+//firebase
+import { db } from '../firebase'
+
 const HomeScreen = () => {
+  useEffect(() => {
+    db.collectionGroup('posts').onSnapshot(snapshot => {
+      console.log(snapshot.docs.map(doc => doc.data()))
+    })
+  },[])
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
