@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { StyleSheet, Text, TextInput, View, Pressable, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Pressable, TouchableOpacity, Alert } from 'react-native'
 
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import Validator from 'email-validator'
+
+import firebase from '../../firebase'
 
 const LoginForm = () => {
 
@@ -15,12 +17,36 @@ const LoginForm = () => {
         password: Yup.string().required().min(6, 'You password has to have at least 6 characters')
     })
 
+    const onLogin = async ( email, password ) => {
+        try {
+            await firebase.auth().signInWithEmailAndPassword(email, password)
+            console.log('firebase login successful', email, password)
+            navigation.navigate('Home')
+        } catch (error) {
+            Alert.alert(
+                'Errror',
+                error.message,
+                [
+                    {
+                        text: 'Ok',
+                        onPress: () => console.log('pressed ok'),
+                        style: 'cancel'
+                    },
+                    {
+                        text: 'Sign Up',
+                        onPress: () => navigation.navigate('SignupScreen'),
+                    }
+                ]
+            )
+        }
+    }
+
   return (
     <View style={styles.wrapper}>
         <Formik
         initialValues={{ email: '', password: ''}}
-        onSubmit={values => {
-            console.log(values)
+        onSubmit={(values) => { 
+            onLogin(values.email, values.password)
         }}
         validationSchema={LoginFormSchema}
         validationOnMounts
