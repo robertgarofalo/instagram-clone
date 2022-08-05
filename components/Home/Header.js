@@ -1,7 +1,11 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 const Header = () => {
+
+    const navigation = useNavigation()
+
   return (
     <View style={styles.container}>
         <TouchableOpacity>
@@ -12,7 +16,7 @@ const Header = () => {
       </TouchableOpacity>
 
       <View style={styles.iconContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('NewPostScreen')}>
             <Image 
             style={styles.icon} 
             source={{

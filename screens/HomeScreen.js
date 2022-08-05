@@ -12,8 +12,6 @@ import Stories from '../components/Home/Stories'
 import Post from '../components/Home/Post'
 import BottomTabs from '../components/Home/BottomTabs'
 
-
-
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
