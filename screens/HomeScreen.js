@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
 import { SafeAreaView, StyleSheet, ScrollView } from 'react-native'
 import { Divider } from 'react-native-elements'
@@ -14,13 +14,30 @@ import Post from '../components/Home/Post'
 import BottomTabs from '../components/Home/BottomTabs'
 
 //firebase
-import { db } from '../firebase'
+
+import { db, firebase } from '../firebase'
 
 const HomeScreen = () => {
+  const [ posts, setPosts ] = useState([])
+
+  const user = firebase.auth().currentUser
+
   useEffect(() => {
-    db.collectionGroup('posts').onSnapshot(snapshot => {
-      console.log(snapshot.docs.map(doc => doc.data()))
-    })
+  //  db.collectionGroup('posts').onSnapshot(snapshot => {
+  //     const data = []
+  //     snapshot.docs.forEach(doc => {
+  //       if (user.uid == doc.data().ownerUid){
+  //         data.push(doc.data())
+  //       }
+  //     })
+
+  //     setPosts(data)
+  //   })
+
+  db.collectionGroup('posts').onSnapshot(snapshot => {
+    setPosts(snapshot.docs.map(doc => doc.data()))
+  })
+
   },[])
 
   return (
@@ -29,7 +46,7 @@ const HomeScreen = () => {
       <Header />
       <Stories />
         <Divider style={{marginBottom: 10}} width={1} orientation='vertical' />
-        {POSTS.map((item, index) => (
+        {posts.map((item, index) => (
           <Post key={`post-${index}`} post={item}/>
         ))}
       </ScrollView>

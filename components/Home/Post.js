@@ -39,7 +39,7 @@ const PostImage = ({ post }) => (
         <Image 
         style={styles.postImage}
         source={{
-            uri: post.imageURL
+            uri: post.imageUrl
         }}
         />
     </View>
