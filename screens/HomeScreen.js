@@ -23,21 +23,12 @@ const HomeScreen = () => {
   const user = firebase.auth().currentUser
 
   useEffect(() => {
-  //  db.collectionGroup('posts').onSnapshot(snapshot => {
-  //     const data = []
-  //     snapshot.docs.forEach(doc => {
-  //       if (user.uid == doc.data().ownerUid){
-  //         data.push(doc.data())
-  //       }
-  //     })
-
-  //     setPosts(data)
-  //   })
-
-  db.collectionGroup('posts').onSnapshot(snapshot => {
-    setPosts(snapshot.docs.map(doc => doc.data()))
-  })
-
+   const unsubscribe = db.collectionGroup('posts')
+   .orderBy('createdAt', 'desc')
+   .onSnapshot(snapshot => {
+      setPosts(snapshot.docs.map(post => ({ id: post.id, ...post.data()})))
+    })
+    return unsubscribe
   },[])
 
   return (
